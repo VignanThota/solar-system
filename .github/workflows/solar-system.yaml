@@ -25,7 +25,10 @@ jobs:
 
             - name: unit test
               run: |
-                echo "${{ vars.MONGO_USERNAME }}"
+                echo "${{ vars.MONGO_USERNAME }}" > data.txt
+                ls
+                pwd
+                cat data.txt
 
 
 
