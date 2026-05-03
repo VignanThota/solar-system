@@ -46,6 +46,29 @@ jobs:
                 name: test-binary-${{ matrix.operating_systems }}-${{ matrix.nodejs_version }}
                 path: data-${{ matrix.operating_systems }}-${{ matrix.nodejs_version }}.txt
                 retention-days: 3
+    code-coverage:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout repo
+              uses: actions/checkout@v3
+              
+            - name: setup nodejs version ${{ matrix.nodejs_version }}
+              uses: actions/setup-node@v3
+              with:
+                node-version: ${{ matrix.nodejs_version }}
+
+            - name: install dependencies
+              run: npm install
+
+            - name: code-coverage 
+              run: npm run coverage
+                            
+            - name: upload artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                name: coverage-binary
+                path: coverage
+                retention-days: 3
 
 
 
