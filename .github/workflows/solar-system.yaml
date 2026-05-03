@@ -34,7 +34,7 @@ jobs:
 
             - name: unit test  
               run: |
-                echo "${{ vars.MONGO_USERNAME }}" > data.txt
+                echo "${{ vars.MONGO_USERNAME }}" > data-${{ matrix.target }}.txt
                 echo ${{ matrix.target }}
                 ls
                 pwd
