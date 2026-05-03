@@ -43,8 +43,9 @@ jobs:
             - name: upload artifacts
               uses: actions/upload-artifact@v4
               with:
-                name: test-binary
+                name: test-binary-${{ matrix.target }}
                 path: data-${{ matrix.target }}.txt
+                retention-days: 3
 
 
 
