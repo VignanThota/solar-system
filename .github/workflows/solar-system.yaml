@@ -14,6 +14,7 @@ jobs:
             matrix:
                 nodejs_version: [18,19,20]
                 operating_systems: [ubuntu-latest, macos-latest]
+                target: [1,2,3]
                 exclude:
                     - nodejs_version: 18
                       operating_systems: macos-latest
@@ -31,9 +32,10 @@ jobs:
             - name: install dependencies
               run: npm install
 
-            - name: unit test
+            - name: unit test  
               run: |
                 echo "${{ vars.MONGO_USERNAME }}" > data.txt
+                echo ${{ matrix.target }}
                 ls
                 pwd
                 cat data.txt
