@@ -29,6 +29,12 @@ jobs:
                 ls
                 pwd
                 cat data.txt
+            
+            - name: upload artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                name: test-binary
+                path: data.txt
 
 
 
