@@ -14,7 +14,7 @@ jobs:
             matrix:
                 nodejs_version: [18,19,20]
                 operating_systems: [ubuntu-latest, macos-latest]
-                target: [1,2,3]
+                # target: [1,2,3]
                 exclude:
                     - nodejs_version: 18
                       operating_systems: macos-latest
@@ -34,17 +34,17 @@ jobs:
 
             - name: unit test  
               run: |
-                echo "${{ vars.MONGO_USERNAME }}" > data-${{ matrix.target }}.txt
-                echo ${{ matrix.target }}
+                echo "${{ vars.MONGO_USERNAME }}" > data-${{ matrix.operating_systems }}-${{ matrix.nodejs_version }}.txt
+                echo ${{ matrix.operating_systems }}-${{ matrix.nodejs_version }}
                 ls
                 pwd
-                cat data-${{ matrix.target }}.txt
+                cat data-${{ matrix.operating_systems }}-${{ matrix.nodejs_version }}.txt
             
             - name: upload artifacts
               uses: actions/upload-artifact@v4
               with:
-                name: test-binary-${{ matrix.operating_systems }}-${{ matrix.nodejs_version }}-${{ matrix.target }}
-                path: data-${{ matrix.target }}.txt
+                name: test-binary-${{ matrix.operating_systems }}-${{ matrix.nodejs_version }}
+                path: data-${{ matrix.operating_systems }}-${{ matrix.nodejs_version }}.txt
                 retention-days: 3
 
 
