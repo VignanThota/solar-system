@@ -10,16 +10,25 @@ on:
 jobs:
     unit-testing:
         name: unit testing
-        strategy:
-            matrix:
-                nodejs_version: [18,19,20]
-                operating_systems: [ubuntu-latest, macos-latest]
-                # target: [1,2,3]
-                exclude:
-                    - nodejs_version: 18
-                      operating_systems: macos-latest
+        services:
+          mongo-db:
+            image: siddharth67/mongo-db:non-prod
+            ports:
+              - 27017:27017
+        env:
+          MONGO_URI: 'mongodb://localhost:27017/superData'
+          MONGO_USERNAME: non-prod-user
+          MONGO_PASSWORD: non-prod-password
+        # strategy:
+        #     matrix:
+        #         nodejs_version: [18,19,20]
+        #         operating_systems: [ubuntu-latest, macos-latest]
+        #         # target: [1,2,3]
+        #         exclude:
+        #             - nodejs_version: 18
+        #               operating_systems: macos-latest
 
-        runs-on: ${{ matrix.operating_systems }}
+        runs-on: ubuntu-latest 
         steps:
             - name: checkout repo
               uses: actions/checkout@v3
@@ -33,12 +42,13 @@ jobs:
               run: npm install
 
             - name: unit test  
-              run: |
-                echo "${{ vars.MONGO_USERNAME }}" > data-${{ matrix.operating_systems }}-${{ matrix.nodejs_version }}.txt
-                echo ${{ matrix.operating_systems }}-${{ matrix.nodejs_version }}
-                ls
-                pwd
-                cat data-${{ matrix.operating_systems }}-${{ matrix.nodejs_version }}.txt
+              run: npm test
+                #  |
+              #   echo "${{ vars.MONGO_USERNAME }}" > data-${{ matrix.operating_systems }}-${{ matrix.nodejs_version }}.txt
+              #   echo ${{ matrix.operating_systems }}-${{ matrix.nodejs_version }}
+              #   ls
+              #   pwd
+              #   cat data-${{ matrix.operating_systems }}-${{ matrix.nodejs_version }}.txt
             
             - name: upload artifacts
               uses: actions/upload-artifact@v4
