@@ -103,6 +103,12 @@ jobs:
             docker images
             ls
             
+        - name: publish docker image
+          uses: docker/build-push-action@v4
+          with:
+            context: .
+            push: true
+            tags: ${{ vars.DOCKERHUB_USERNAME }}-ss:${{ github.sha }}
             
 
 
