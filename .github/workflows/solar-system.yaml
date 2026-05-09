@@ -77,6 +77,19 @@ jobs:
                 name: coverage-binary
                 path: coverage
                 retention-days: 3
+    docker:
+      name: containerization
+      needs: [unit-testing, code-coverage]
+      runs-on: ubuntu-latest
+      steps:
+        - name: checkout-repo
+          uses: actions/checkout@v4
+        
+        - name: Dockerhub-login
+          uses: docker/login-action@c2.2.0
+          with:
+            username: ${{ vars.DOCKERHUB_USERNAME }}
+            password: #{{ secrets.DOCKERHUB_PASSWORD }}
 
 
 
