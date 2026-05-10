@@ -162,6 +162,17 @@ jobs:
       steps:
         - name: checkout-repo
           uses: actions/checkout@v4
+
+
+        - name: Create cluster
+          id: create-cluster
+          # if: ${{ env.UFFIZZI_ACTION == 'create' }} || ${{ env.UFFIZZI_ACTION == 'update' }}
+          uses: UffizziCloud/cluster-action@reusable
+          with:
+            action: create
+            cluster-name: "development"
+            # k8s-manifest-file: ${{ inputs.k8s-manifest-cache-path }}
+            # server: ${{ inputs.server }}
         
         - name: kubectl installation
           uses: azure/setup-kubectl@v4
