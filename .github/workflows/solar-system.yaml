@@ -158,7 +158,7 @@ jobs:
 
     dev-deploy:
       needs: docker 
-      runs-on: ububtu-latest
+      runs-on: ubuntu-latest
       steps:
         - name: checkout-repo
           uses: actions/checkout@v4
